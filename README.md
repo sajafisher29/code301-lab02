@@ -1,9 +1,6 @@
 # code301-lab02
 Creating a photo gallery styling it with floats.
 
-Build status
-Build status of continus integration i.e. travis, appveyor etc. Ex. -
-
 Build Process
 Feature #1: Display images
 Number and name of feature:
