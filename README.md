@@ -4,8 +4,8 @@ We are creating a photo gallery styling it with floats.
 # Build Process
 
 #Feature #1: Display images
-Start time:
-Finish time:
+Start time: 9:45am
+Finish time: 10:45am
 Actual time needed to complete:
 
 ##Why are we implementing this feature?
@@ -21,8 +21,8 @@ Use jQuery to make a copy of the HTML template of the photo component. For each 
 
 
 #Feature #2: Filter images
-Start time:
-Finish time:
+Start time: 11:00am
+Finish time: 12:00pm
 Actual time needed to complete:
 
 ##Why are we implementing this feature?
@@ -37,8 +37,8 @@ Use an event handler to respond when the user chooses an option from the select 
   
   
 #Feature #3: Style the application
-Start time:
-Finish time:
+Start time: 12:30pm
+Finish time: 1:15pm
 Actual time needed to complete:
 
 ##Why are we implementing this feature?
