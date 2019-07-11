@@ -3,5 +3,51 @@
 }
 
 html {
-  
+  background-color: rgb(0, 195, 255);
+  font-family: Verdana;
+}
+
+img {
+    height: 200px;
+    width:200px;
+    border:1px dashed black;
+}
+
+h2, p {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+section {
+    float:left;
+    margin:5px;
+    word-wrap: break-word;
+    width: 200px;
+    height: 300px;   
+    text-align: center; 
+}
+
+footer{
+    position: fixed;
+    Width: 100%;
+    bottom: 0;
+    text-align: center;
+}
+
+#photoStorage{
+    margin:auto;
+    width:850px;
+}
+
+.top{
+    text-align: center;
+}
+
+h1{
+    font-size: 30px;
+    margin-bottom:30px;
+    font-family:'Barriecito', cursive;
+}
+
+#dropMenu{
+    margin-bottom: 30px;
 }
