@@ -35,7 +35,7 @@ function readFile(){
 
 function displayImages(){
   const keywordArray = [];
-
+  console.log(keywordArray);
   ImageObject.list.forEach( item => {
     const $newItem = $('#photo-template').clone();
 
@@ -55,7 +55,9 @@ function displayImages(){
 
   keywordArray.forEach(item => {
     const $newKey = $('.menuOption').clone();
-    $newKey.text(item.title);
+    $newKey.text(item);
+    $('#dropMenu').append($newKey);
+    $newKey.removeAttr('class');
   })
 }
 
