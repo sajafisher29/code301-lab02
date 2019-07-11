@@ -6,7 +6,7 @@ We are creating a photo gallery styling it with floats.
 #Feature #1: Display images
 Start time: 9:45am
 Finish time: 10:45am
-Actual time needed to complete:
+Actual time needed to complete: 6 hours
 
 ##Why are we implementing this feature?
 As a user, I want to view the images on the page so that I can browse the photo collection.
@@ -18,7 +18,6 @@ Then the photo gallery should display all of the images in the gallery
 Use AJAX, specifically $.get(), to read the provided JSON file.
 Each object should become a new instance of a constructor function. Refer to the data to determine the necessary properties.
 Use jQuery to make a copy of the HTML template of the photo component. For each object, fill in the duplicated template with its properties, then append the copy to the DOM.
-
 
 #Feature #2: Filter images
 Start time: 11:00am
