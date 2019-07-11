@@ -4,7 +4,7 @@
 
 function startApp(){
   readFile();
-  // displayImages();
+  addEventListeners();
 }
 
 //Constructor function to create objects with the JSON data
@@ -35,7 +35,7 @@ function readFile(){
 
 function displayImages(){
   const keywordArray = [];
-  console.log(keywordArray);
+
   ImageObject.list.forEach( item => {
     const $newItem = $('#photo-template').clone();
 
@@ -53,12 +53,28 @@ function displayImages(){
 
   $('photo-template').remove();
 
+  //Read the keyword array and fill the drop down menu with those items
+
   keywordArray.forEach(item => {
-    const $newKey = $('.menuOption').clone();
+    const $newKey = $('.menuName').clone();
     $newKey.text(item);
+    $newKey.attr('value', 'menuItem');
     $('#dropMenu').append($newKey);
     $newKey.removeAttr('class');
   })
+}
+
+function addEventListeners() {
+  $('select').on('change', event => {
+    const $menuChoice = $(event.target).val();
+
+    if($menuChoice === 'default') {
+      $('.picSection').show();
+    } else {
+      $('.picSection').hide();
+      $(___________________).show();
+    }
+  });
 }
 
 $(startApp);
