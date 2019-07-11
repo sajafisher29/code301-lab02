@@ -4,7 +4,6 @@
 
 function startApp(){
   readFile();
-  addEventListeners();
 }
 
 //Constructor function to create objects with the JSON data
@@ -62,19 +61,6 @@ function displayImages(){
     $('#dropMenu').append($newKey);
     $newKey.removeAttr('class');
   })
-}
-
-function addEventListeners() {
-  $('select').on('change', event => {
-    const $menuChoice = $(event.target).val();
-
-    if($menuChoice === 'default') {
-      $('.picSection').show();
-    } else {
-      $('.picSection').hide();
-      $(___________________).show();
-    }
-  });
 }
 
 $(startApp);
