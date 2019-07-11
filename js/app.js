@@ -26,7 +26,9 @@ function readFile(){
     objectsArray.forEach(item => {
       ImageObject.list.push(new ImageObject(item));
     })
+    console.log(ImageObject.list, 'I exist before the call');
     displayImages();
+    console.log(ImageObject.list, 'I exist after the call');
   },'json');
 }
 
@@ -34,32 +36,31 @@ function readFile(){
 
 function displayImages(){
   const keywordArray = [];
-
   ImageObject.list.forEach( item => {
-    const $newItem = $('#photo-template').clone();
+    const $newItem = $('.photo-template').clone();
+    console.log($('.photo-template'), 'hello?');
+    console.log($newItem, 'I exist');
 
     $newItem.find('h2').text(item.title);
     $newItem.find('img').attr('src', item.image_url).attr('alt', item.keyword);
     $newItem.find('p').text(item.description);
-    $newItem.removeAttr('id')
+    $newItem.removeClass('photo-template');
 
     $('main').append($newItem);
+    console.log($newItem, 'I exist');
 
     if(!keywordArray.includes(item.keyword)) {keywordArray.push(item.keyword);}
   });
 
   //Remove the photo template now that we have data to add to the page
-
-  $('photo-template').remove();
+  $('.photo-template').remove();
+  keywordArray.sort();
 
   //Read the keyword array and fill the drop down menu with those items
 
-  keywordArray.forEach(item => {
-    const $newKey = $('.menuName').clone();
-    $newKey.text(item);
-    $newKey.attr('value', 'menuItem');
-    $('#dropMenu').append($newKey);
-    $newKey.removeAttr('class');
+  keywordArray.forEach(keyword => {
+    const $newKey = `<option value="${keyword}">${keyword}</option>`;
+    $('select').append($newKey);
   })
 }
 
