@@ -4,26 +4,43 @@
 
 function startApp(){
   readFile();
-  displayImages();
+  // displayImages();
+}
+
+//Constructor function to create objects with the JSON data
+
+ImageObject.list = []
+
+function ImageObject (item){
+  this.image_url = item.image_url;
+  this.title = item.title;
+  this.description = item.description;
+  this.keyword = item.keyword;
+  this.horns = item.horns;
 }
 
 //Create function to read the file, run them through the constructor function, and into the storage array
 
 function readFile(){
-  const successful = data => displayImages(data);
+  // const successful = data => displayImages(data);
 
-  $.get('/data/page-1.json', data => {
-    if (data.length){successful(data);}
-    else {console.log('The file was not read.');}
+  $.get('/data/page-1.json', objectsArray => {
+    objectsArray.forEach(item => {
+      ImageObject.list.push(new ImageObject(item));
+      console.log(ImageObject.list, 'do I have stuff')
+      // if (item.length){ImageObject.list.push(new ImageObject(item));}
+      // else {console.log('The file was not read.');}
+    })
+    displayImages();
   },'json');
 }
 
 //Create function to display images on the home page by cloning the template for each photo object
 
-function displayImages(data){
+function displayImages(){
   const keywordArray = [];
 
-  data.forEach( item => {
+  ImageObject.list.forEach( item => {
     const $newItem = $('#photo-template').clone();
 
     $newItem.find('h2').text(item.title);
@@ -41,13 +58,13 @@ function displayImages(data){
 
   $('photo-template').remove();
 
-  keywordArray.forEach(item => {
-    const $newImage = $('optionMenu').clone();
-    $newImage.text(item);
-    $newImage.attr('value', item);
+  // keywordArray.forEach(item => {
+  //   const $newImage = $('optionMenu').clone();
+  //   $newImage.text(item);
+  //   $newImage.attr('value', item);
 
-    $('select').append($newImage);
-  })
+  //   $('select').append($newImage);
+//   })
 }
 
 $(startApp);
