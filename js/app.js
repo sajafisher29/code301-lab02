@@ -1,50 +1,70 @@
 'use strict'
-//////////////////////////////////////
 
-//build constructor function to build/display each photo
-//use AJAX $.get() to read the JSON file data
-// use jQuery to make a copy of the HMTL template of the photo component
-//for each object, fill in the duplicated template with its properties, then append the copy to the DOM
+//Create helper funtion to launch actions when the app is started
+
+function startApp(){
+  readFile();
+  // displayImages();
+}
+
+//Constructor function to create objects with the JSON data
+
+ImageObject.list = []
 
 function ImageObject (item){
-  this.img_url = item.image_url;
+  this.image_url = item.image_url;
   this.title = item.title;
   this.description = item.description;
   this.keyword = item.keyword;
   this.horns = item.horns;
 }
-ImageObject.list = []
+
+//Create function to read the file, run them through the constructor function, and into the storage array
 
 function readFile(){
-  $.get('/data/page-1.json', data => {
-    console.log(data);
-    data.forEach( item => {
-      ImageObject.list.push( new ImageObject(item))
-    });
+  // const successful = data => displayImages(data);
 
+  $.get('/data/page-1.json', objectsArray => {
+    objectsArray.forEach(item => {
+      ImageObject.list.push(new ImageObject(item));
+      console.log(ImageObject.list, 'do I have stuff')
+      // if (item.length){ImageObject.list.push(new ImageObject(item));}
+      // else {console.log('The file was not read.');}
+    })
+    displayImages();
   },'json');
 }
 
-function displayImages(ImageObject){
-  ImageObject.list.forEach(item => {
+//Create function to display images on the home page by cloning the template for each photo object
 
+function displayImages(){
+  const keywordArray = [];
+
+  ImageObject.list.forEach( item => {
     const $newItem = $('#photo-template').clone();
 
     $newItem.find('h2').text(item.title);
-    $newItem.find('img').attr('src', item.img_url);
-    $newItem.find('alt').text(item.keyword);
+    $newItem.find('img').attr('src', item.image_url);
+    $newItem.find('alt').attr(item.keyword);
     $newItem.find('p').text(item.description);
+    $newItem.removeAttr('id')
 
-    $('#photo-template').append($newItem);
+    $('main').append($newItem);
+
+    if(!keywordArray.includes(item.keyword)) {keywordArray.push(item.keyword);}
   });
+
+  //Remove the photo template now that we have data to add to the page
+
+  $('photo-template').remove();
+
+  // keywordArray.forEach(item => {
+  //   const $newImage = $('optionMenu').clone();
+  //   $newImage.text(item);
+  //   $newImage.attr('value', item);
+
+  //   $('select').append($newImage);
+//   })
 }
 
-
-function startApp(){
-  readFile();
-  displayImages();
-
-}
-
-console.log('test');
 $(startApp);
