@@ -22,14 +22,10 @@ function ImageObject (item){
 //Create function to read the file, run them through the constructor function, and into the storage array
 
 function readFile(){
-  // const successful = data => displayImages(data);
 
   $.get('/data/page-1.json', objectsArray => {
     objectsArray.forEach(item => {
       ImageObject.list.push(new ImageObject(item));
-      console.log(ImageObject.list, 'do I have stuff')
-      // if (item.length){ImageObject.list.push(new ImageObject(item));}
-      // else {console.log('The file was not read.');}
     })
     displayImages();
   },'json');
@@ -44,8 +40,7 @@ function displayImages(){
     const $newItem = $('#photo-template').clone();
 
     $newItem.find('h2').text(item.title);
-    $newItem.find('img').attr('src', item.image_url);
-    $newItem.find('alt').attr(item.keyword);
+    $newItem.find('img').attr('src', item.image_url).attr('alt', item.keyword);
     $newItem.find('p').text(item.description);
     $newItem.removeAttr('id')
 
@@ -58,13 +53,10 @@ function displayImages(){
 
   $('photo-template').remove();
 
-  // keywordArray.forEach(item => {
-  //   const $newImage = $('optionMenu').clone();
-  //   $newImage.text(item);
-  //   $newImage.attr('value', item);
-
-  //   $('select').append($newImage);
-//   })
+  keywordArray.forEach(item => {
+    const $newKey = $('.menuOption').clone();
+    $newKey.text(item.title);
+  })
 }
 
 $(startApp);
