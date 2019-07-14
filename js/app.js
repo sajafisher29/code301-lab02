@@ -22,46 +22,74 @@ function ImageObject (item){
 
 function readFile(){
 
-  $.get('/data/page-1.json', objectsArray => {
-    objectsArray.forEach(item => {
-      ImageObject.list.push(new ImageObject(item));
-    })
-    console.log(ImageObject.list, 'I exist before the call');
-    displayImages();
-    console.log(ImageObject.list, 'I exist after the call');
-  },'json');
+  $.get('/data/page-1.json', 'json')
+    .then( data => {
+      data.forEach(item => {
+        ImageObject.list.push(new ImageObject(item));
+      })
+
+      displayImages();
+      ImageObject.populateFilter();
+      ImageObject.handleFilter();
+    });
 }
 
 //Create function to display images on the home page by cloning the template for each photo object
 
 function displayImages(){
-  const keywordArray = [];
   ImageObject.list.forEach( item => {
     const $newItem = $('.photo-template').clone();
-    console.log($('.photo-template'), 'hello?');
-    console.log($newItem, 'I exist');
 
     $newItem.find('h2').text(item.title);
     $newItem.find('img').attr('src', item.image_url).attr('alt', item.keyword);
     $newItem.find('p').text(item.description);
+    $newItem.attr('class', item.keyword);
     $newItem.removeClass('photo-template');
-
     $('main').append($newItem);
-    console.log($newItem, 'I exist');
-
-    if(!keywordArray.includes(item.keyword)) {keywordArray.push(item.keyword);}
   });
 
   //Remove the photo template now that we have data to add to the page
+
   $('.photo-template').remove();
+}
+
+//Read the keyword array and fill the drop down menu with those items
+
+ImageObject.populateFilter = () => {
+  const keywordArray = [];
+
+  $('option').not(':first').remove();
+
+  ImageObject.list.forEach ( item => {
+    if(!keywordArray.includes(item.keyword)) {keywordArray.push(item.keyword);}
+  })
+
   keywordArray.sort();
 
-  //Read the keyword array and fill the drop down menu with those items
-
   keywordArray.forEach(keyword => {
-    const $newKey = `<option value="${keyword}">${keyword}</option>`;
+    let $newKey = `<option value = "${keyword}">${keyword}</option>`;
     $('select').append($newKey);
   })
 }
+
+ImageObject.handleFilter = () => {
+  $('select').on('change', function () {
+    let $selected = $(this).value;
+    if ($selected !== 'default') {
+      $('section').hide();
+
+      ImageObject.list.forEach( item => {
+        if ($selected === item.keyword) {
+          $`section[class = "${$selected}"]`.addClass('filtered').fadeIn();
+        }
+      });
+
+      $(`option[value = ${$selected}]`).fadeIn();
+    } else {
+      $('section').removeClass('filtered').fadeIn();
+      $(`option[value = ${$selected}]`).fadeIn();
+    }
+  });
+};
 
 $(startApp);
