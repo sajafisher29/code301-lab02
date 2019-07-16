@@ -30,7 +30,7 @@ function readFile(){
 
       displayImages();
       ImageObject.populateFilter();
-      ImageObject.handleFilter();
+      attachEventListeners();
     });
 }
 
@@ -72,24 +72,19 @@ ImageObject.populateFilter = () => {
   })
 }
 
-ImageObject.handleFilter = () => {
-  $('select').on('change', function () {
-    let $selected = $(this).value;
-    if ($selected !== 'default') {
-      $('section').hide();
+function attachEventListeners() {
+  $('select').on('change', (event) => {
+    const $menuChoice = $(event.target);
+    const value = $menuChoice.val();
 
-      ImageObject.list.forEach( item => {
-        if ($selected === item.keyword) {
-          $`section[class = "${$selected}"]`.addClass('filtered').fadeIn();
-        }
-      });
-
-      $(`option[value = ${$selected}]`).fadeIn();
-    } else {
-      $('section').removeClass('filtered').fadeIn();
-      $(`option[value = ${$selected}]`).fadeIn();
-    }
-  });
-};
+    if (value === 'default') {$('section').show();}
+    else {$('section').each( function() {
+      const $section = $(this);
+      let text = $section.attr('class');
+      if(text === value) {$section.show();}
+      else {$section.hide();}
+    })}
+  })
+}
 
 $(startApp);
